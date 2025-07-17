@@ -1,0 +1,118 @@
+{
+    "restApiPath": "insert-cuenta-comitente",
+    "restApiMethod": "POST",
+    "fechaApertura": "2025-04-04",
+    "denominacion": "APLICACIONES DEL OESTE S.R.L.",
+    "emailsInfo": "facugarcia78@hotmail.com",
+    "esFisico": "false",
+    "patrimonioEstim": "3402216.37",
+    "patrimonioEstimMoneda": "ARS",
+    "actividad": "416",
+    "fechaDesdeCodTpContribIVA": "2025-04-04",
+    "codTpContribIVA": "RI",
+    "tpRiesgoCmt": "BA",
+    "tpCmtTrading": "1",
+    "codGrupoArOperBurs": "40",
+    "codTpComitente": "1",
+    "codCategoriaUIF": "1",
+    "codGrupoArAcreencias": "1",
+    "oficialCuenta": "23",
+    "pmtGeneraAvisosAlertasUIF": "true",
+    "pmtAccesoDMAMTR": "true",
+    "juridicos": {
+      "numInscripcion": "128731",
+      "lugarConstitucion": "Direccion provincial de las p",
+      "folio": "002",
+      "libro": "21209",
+      "tomo": "001",
+      "codPais": "1",
+      "tpRegisJuridica": "1",
+      "cuit": "30715112368",
+      "actividad": "403"
+    },
+    "titulares": [
+      {
+        "apellido": "GARCIA",
+        "nombre": "FACUNDO",
+        "tpDoc": "5",
+        "tpPersona": "true",
+        "numDoc": "26686457",
+        "nacionalidad": "1",
+        "fechaNacimiento": "1978-05-31",
+        "sexo": "1",
+        "posicionCondominio": "0",
+        "lugarNacimiento": "Argentina",
+        "estadoCivil": "1",
+        "esPEP": "false",
+        "esSujetoObligado": "false",
+        "cuit": "20266864575",
+        "codActividad": "403",
+        "codTpContribIVA": "RI",
+        "persTpContribRetencion": "IN",
+        "domicilioParticular": {
+          "codPais": "1",
+          "codProvincia": "3",
+          "altura": "1175",
+          "calle": "30",
+          "localidad": "FLORENTINO AMEGHINO",
+          "codigoPostal": "6064",
+          "telefono": "2355 574029"
+        },
+        "domicilioComercial": {
+          "codPais": "1",
+          "codProvincia": "3",
+          "altura": "150",
+          "calle": "28",
+          "localidad": "Florntino ameghino",
+          "codigoPostal": "6064",
+          "telefono": "2355 574029"
+        },
+        "condTpCondominio": "AP",
+        "emailsInfo": "facugarcia78@hotmail.com"
+      },
+      {
+        "apellido": "APLICACIONES DEL OESTE S.R.L.",
+        "nombre": "-",
+        "tpDoc": "7",
+        "numDoc": "30715112368",
+        "posicionCondominio": "1",
+        "condTpCondominio": "TI",
+        "nacionalidad": "1",
+        "codTpContribIVA": "RI",
+        "codActividad": "403",
+        "tpPersona": "false",
+        "cuit": "30715112368",
+        "domicilioParticular": {
+          "codPais": "1",
+          "codProvincia": "3",
+          "altura": "150",
+          "calle": "28",
+          "localidad": "Florntino ameghino",
+          "codigoPostal": "6064",
+          "telefono": "2355 574029"
+        },
+        "domicilioComercial": {
+          "codPais": "1",
+          "codProvincia": "3",
+          "altura": "150",
+          "calle": "28",
+          "localidad": "Florntino ameghino",
+          "codigoPostal": "6064",
+          "telefono": "2355 574029"
+        }
+      }
+    ],
+    "entMailing": [
+      {
+        "codEntMailing": "1"
+      },
+      {
+        "codEntMailing": "2"
+      },
+      {
+        "codEntMailing": "14"
+      }
+    ],
+    "codTpRiesgo": "BA",
+    "fechaVencimientoPerfil": "2026-02-06T12:41:52"
+  }

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Data Client</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --background-color: #0f172a;
+            --card-background: rgba(30, 58, 138, 0.1);
+            --text-color: #f8fafc;
+            --border-color: rgba(148, 163, 184, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: var(--text-color);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: rgba(248, 250, 252, 0.8);
+        }
+
+        .card {
+            background: var(--card-background);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .autocomplete {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(248, 250, 252, 0.5);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .autocomplete-items div {
+            padding: 0.75rem;
+            cursor: pointer;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .autocomplete-items div:hover {
+            background: rgba(248, 250, 252, 0.1);
+        }
+
+        .autocomplete-active {
+            background-color: var(--primary-color) !important;
+            color: white;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+
+        #messageLog {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-color);
+        }
+
+        .message {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            white-space: pre-wrap;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .control-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(248, 250, 252, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(248, 250, 252, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Market Data Client</h1>
+            <p>Real-time market data streaming</p>
+        </div>
+
+        <div class="card">
+            <h2>Connection</h2>
+            <div class="control-group">
+                <button onclick="connect()">Connect</button>
+                <span id="connectionStatus" class="status"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Subscription</h2>
+            <div class="control-group">
+                <div class="autocomplete">
+                    <input type="text" id="symbol" placeholder="Enter symbol to subscribe">
+                </div>
+                <button onclick="subscribe()">Subscribe</button>
+            </div>
+            <span id="subscriptionStatus" class="status"></span>
+        </div>
+
+        <div class="card">
+            <h2>Messages</h2>
+            <div id="messageLog"></div>
+        </div>
+    </div>
+
+    <script>
+        let symbols = [];
+        let ws;
+        
+        // Function to load symbols when connected
+        async function loadSymbols() {
+            try {
+                const response = await fetch('/get_instruments');
+                const data = await response.json();
+                if (data.symbols) {
+                    symbols = data.symbols;
+                }
+            } catch (error) {
+                console.error('Error loading symbols:', error);
+            }
+        }
+
+        // Autocomplete functionality
+        function autocomplete(inp) {
+            let currentFocus;
+            
+            inp.addEventListener("input", function(e) {
+                let val = this.value;
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                
+                let a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+                
+                for (let i = 0; i < symbols.length; i++) {
+                    if (symbols[i].toUpperCase().includes(val.toUpperCase())) {
+                        let b = document.createElement("DIV");
+                        b.innerHTML = symbols[i];
+                        b.addEventListener("click", function(e) {
+                            inp.value = this.innerHTML;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            
+            function closeAllLists(elmnt) {
+                let x = document.getElementsByClassName("autocomplete-items");
+                for (let i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        // Initialize autocomplete
+        document.addEventListener("DOMContentLoaded", function() {
+            autocomplete(document.getElementById("symbol"));
+        });
+
+        function connect() {
+            fetch('/connect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('connectionStatus').textContent = 'Error: ' + data.error;
+                    document.getElementById('connectionStatus').className = 'status error';
+                } else {
+                    document.getElementById('connectionStatus').textContent = 'Connected';
+                    document.getElementById('connectionStatus').className = 'status success';
+                    loadSymbols(); // Load symbols after successful connection
+                    
+                    // Initialize WebSocket connection
+                    ws = new WebSocket('ws://' + window.location.host + '/ws');
+                    ws.onmessage = function(event) {
+                        const messageLog = document.getElementById('messageLog');
+                        const message = document.createElement('div');
+                        message.className = 'message';
+                        try {
+                            const data = JSON.parse(event.data);
+                            message.textContent = JSON.stringify(data, null, 2);
+                        } catch (e) {
+                            message.textContent = event.data;
+                        }
+                        messageLog.appendChild(message);
+                        messageLog.scrollTop = messageLog.scrollHeight;
+                    };
+                }
+            })
+            .catch(error => {
+                document.getElementById('connectionStatus').textContent = 'Error: ' + error;
+                document.getElementById('connectionStatus').className = 'status error';
+            });
+        }
+
+        function subscribe() {
+            const symbol = document.getElementById('symbol').value;
+            
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ symbol: symbol })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('subscriptionStatus').textContent = 'Error: ' + data.error;
+                    document.getElementById('subscriptionStatus').className = 'status error';
+                } else {
+                    document.getElementById('subscriptionStatus').textContent = 'Subscribed to ' + symbol;
+                    document.getElementById('subscriptionStatus').className = 'status success';
+                }
+            })
+            .catch(error => {
+                document.getElementById('subscriptionStatus').textContent = 'Error: ' + error;
+                document.getElementById('subscriptionStatus').className = 'status error';
+            });
+        }
+    </script>
+</body>
+</html> 
