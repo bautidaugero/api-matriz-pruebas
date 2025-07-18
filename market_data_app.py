@@ -25,6 +25,7 @@ market_data_client = None
 market_data_thread = None
 primary_client = None
 connected_clients = set()
+received_messages = []
 
 # Hardcoded credentials
 CLIENT_ID = get_required_env('CLIENT_ID')
@@ -54,7 +55,7 @@ def handle_websocket(ws):
 def index():
     return render_template('market_data.html')
 
-@app.route('/get_instruments', methods=['GgET'])
+@app.route('/get_instruments', methods=['GET'])
 def get_instruments():
     global primary_client
     try:
