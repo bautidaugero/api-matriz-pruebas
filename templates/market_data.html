@@ -162,6 +162,10 @@
             color: var(--error-color);
         }
 
+        .spacer {
+            margin-bottom: 6rem;
+        }
+
         #messageLog {
             height: 400px;
             overflow-y: auto;
@@ -234,15 +238,17 @@
             </div>
         </div>
 
-        <div class="card">
-            <h2>Subscription</h2>
-            <div class="control-group">
-                <div class="autocomplete">
-                    <input type="text" id="symbol" placeholder="Enter symbol to subscribe">
+        <div class="card spacer"> <!-- Agregar la clase spacer -->
+            <div class="card">
+                <h2>Subscription</h2>
+                <div class="control-group">
+                    <div class="autocomplete">
+                        <input type="text" id="symbol" placeholder="Enter symbol to subscribe">
+                    </div>
+                    <button onclick="subscribe()">Subscribe</button>
                 </div>
-                <button onclick="subscribe()">Subscribe</button>
+                <span id="subscriptionStatus" class="status"></span>
             </div>
-            <span id="subscriptionStatus" class="status"></span>
         </div>
 
         <div class="card">
