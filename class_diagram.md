@@ -77,36 +77,3 @@ classDiagram
     note for PrimaryTradingClient "Cliente HTTP para autenticación\ny consulta de instrumentos"
 ```
 
-## Flujo de Comunicación
-
-```mermaid
-sequenceDiagram
-    participant Browser as Web Browser
-    participant App as MarketDataApp
-    participant Primary as PrimaryTradingClient
-    participant Market as MarketDataClient
-    participant API as Matriz API
-
-    Browser->>App: POST /connect
-    App->>Primary: _get_access_token()
-    Primary->>API: POST /auth/getToken
-    API-->>Primary: X-Auth-Token
-    Primary-->>App: access_token
-    App->>Market: MarketDataClient(token, ws_url)
-    Market->>API: WebSocket connection
-    App-->>Browser: {'status': 'connected'}
-
-    Browser->>App: GET /get_instruments
-    App->>Primary: get_instruments()
-    Primary->>API: GET /instruments
-    API-->>Primary: instruments list
-    Primary-->>App: symbols array
-    App-->>Browser: {'symbols': [...]}
-
-    Browser->>App: POST /subscribe
-    App->>Market: subscribe(symbols, callback)
-    Market->>API: WebSocket subscribe message
-    API-->>Market: Market data stream
-    Market->>App: market_data_callback(data)
-    App->>Browser: WebSocket message (real-time data)
-```
