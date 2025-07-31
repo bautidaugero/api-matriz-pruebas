@@ -4,6 +4,23 @@
 
 ```mermaid
 classDiagram
+    
+
+    class MarketDataClient {
+        -str access_token
+        -str ws_url
+        -WebSocket ws
+        -Thread ws_thread
+        -dict subscriptions
+        -dict callbacks
+        -bool connected
+        -Event connection_event
+        +__init__(access_token, ws_url)
+        +subscribe(symbols, depth, callback) void
+        +_connect_websocket() void
+        +close() void
+    }
+
     class MarketDataApp {
         -Flask app
         -Sock sock
@@ -22,21 +39,6 @@ classDiagram
         +get_messages() jsonify
         +market_data_callback(data) void
         +handle_websocket(ws) void
-    }
-
-    class MarketDataClient {
-        -str access_token
-        -str ws_url
-        -WebSocket ws
-        -Thread ws_thread
-        -dict subscriptions
-        -dict callbacks
-        -bool connected
-        -Event connection_event
-        +__init__(access_token, ws_url)
-        +subscribe(symbols, depth, callback) void
-        +_connect_websocket() void
-        +close() void
     }
 
     class PrimaryTradingClient {
