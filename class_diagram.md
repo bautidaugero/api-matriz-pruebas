@@ -74,8 +74,8 @@ classDiagram
     MarketDataClient --> WebSocketAPI : connects
     PrimaryTradingClient --> RESTAPI : requests
 
-    note for MarketDataApp "Aplicación Flask principal\nManeja WebSockets y REST API"
-    note for MarketDataClient "Cliente WebSocket para datos\nde mercado en tiempo real"
-    note for PrimaryTradingClient "Cliente HTTP para autenticación\ny consulta de instrumentos"
+    note for MarketDataApp "Aplicación Flask principal Maneja WebSockets y REST API"
+    note for MarketDataClient "Cliente WebSocket para datos de mercado en tiempo real"
+    note for PrimaryTradingClient "Cliente HTTP para autenticación y consulta de instrumentos"
 ```
 
